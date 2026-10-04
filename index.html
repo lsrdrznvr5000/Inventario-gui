@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario GUI</title>
+    <script src="producto.js"></script>
+    <script src="inventario.js"></script>
+</head>
+<body>
+    <div id="App">
+        <form>
+            <label>Codigo:
+                <input type="text" id="txtCod" name="Código">
+            </label>
+            <label>Nombre:
+                <input type="text" id="txtNom" name="Nombre">
+            </label>
+            <label>Cantidad:
+                <input type="text" id="txtCant" name="Cantidad">
+            </label>
+            <label>Precio:
+                <input type="text" id="txtPrec" name="Precio">
+            </label>
+            <button type="button" id="btnAdd">Agregar</button>
+            <button type="button" id="btnList">Listar</button>
+            <button type="reset">cancelar</button>
+        </form>
+        <div id="Detalles" style="white-space: pre-line"></div>
+    </div>
+</body>
+<script>
+    const inv=new Inventario();
+    const divDetalles=document.getElementById("Detalles");
+    const btnAdd=document.getElementById("btnAdd");
+    btnAdd.addEventListener("click",()=>{
+        let codigo=document.getElementById("txtCod").value;
+        let nombre=document.getElementById("txtNom").value;
+        let cantidad=document.getElementById("txtCant").value;
+        let precio=document.getElementById("txtPrec").value;
+        let nuevo=new Producto(codigo, nombre, cantidad, precio);
+        inv.agregar(nuevo);
+        divDetalles.innerHTML +=`
+            <div><h3>Se agrego</h3>
+                <p>${nuevo.infoHTML()}</p>
+            </div>
+        `;
+
+    });
+
+    const btnList=document.getElementById("btnList");
+    btnList.addEventListener("click",()=>{
+        divDetalles.textContent=inv.listarInverso();
+    });
+</script>
+</html>
